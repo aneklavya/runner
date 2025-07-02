@@ -11,7 +11,7 @@ on:
       - dev
 jobs:
   docker-build-push:
-    runs-on: [backend]
+    runs-on: [hello]
     if: github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v4
