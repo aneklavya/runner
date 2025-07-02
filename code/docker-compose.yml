@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  backend1:
+    build:
+      context: ./backend1
+    container_name: backend1
+    env_file:
+      - ./backend1/.env
+    ports:
+      - "5434:5434"
+    networks:
+      - aryan-network
+    depends_on:
+      - postgres
+
+  backend2:
+    build:
+      context: ./backend2
+    container_name: backend2
+    env_file:
+      - ./backend2/.env
+    ports:
+      - "5435:5435"
+    networks:
+      - aryan-network
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - aryan-network
+
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: fellowship
+      POSTGRES_PASSWORD: fellowship
+      POSTGRES_DB: fellowship
+    ports:
+      - "5432:5432"
+    networks:
+      - aryan-network
+
+networks:
+  aryan-network:
+    driver: bridge
